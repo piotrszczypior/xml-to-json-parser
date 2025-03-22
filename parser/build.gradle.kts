@@ -1,4 +1,5 @@
 var antlr4Version = "4.13.2"
+var googleGuice = "7.0.0"
 
 plugins {
     id("java")
@@ -16,6 +17,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     antlr("org.antlr:antlr4:$antlr4Version")
+
+    implementation("com.google.inject:guice:$googleGuice")
 }
 
 tasks.generateGrammarSource {
