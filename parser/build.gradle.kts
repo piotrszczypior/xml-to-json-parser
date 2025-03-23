@@ -1,6 +1,7 @@
 var antlr4Version = "4.13.2"
 var googleGuiceVersion = "7.0.0"
-var jsonVersionVersion = "20250107";
+var jsonVersionVersion = "20250107"
+var lombokVersion = "1.18.36"
 
 
 var grammarPackage = "org.pwr.grammar"
@@ -21,9 +22,14 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     antlr("org.antlr:antlr4:$antlr4Version")
-
     implementation("com.google.inject:guice:$googleGuiceVersion")
     implementation("org.json:json:$jsonVersionVersion")
+
+    // lombok
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
 tasks.generateGrammarSource {

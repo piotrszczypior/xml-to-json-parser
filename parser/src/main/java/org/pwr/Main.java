@@ -1,29 +1,24 @@
 package org.pwr;
 
-import com.google.inject.Inject;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.pwr.grammar.XMLLexer;
-import org.pwr.grammar.XMLParser;
 import org.pwr.guice.GuiceInjector;
-import org.pwr.parser.XMLVisitor;
+import org.pwr.visitor.XmlNode;
 
 public class Main {
 
     public static void main(String[] args) {
 
-//        String xmlInput = "<person><name>John</name><age>30</age></person>";
-        String xmlInput = "<person>name</person>";
-        CharStream input = CharStreams.fromString(xmlInput);
+        String xmlInput = "<book id=\"101\" genre=\"fiction\">"
+                + "    <title>Best Novel</title>"
+                + "    <author>Jane Doe</author>"
+                + "    <publication>"
+                + "        <publisher>Fiction House</publisher>"
+                + "        <year>2021</year>"
+                + "    </publication>"
+                + "</book>";
 
-        XMLLexer lexer = new XMLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        XMLParser parser = new XMLParser(tokens);
-        ParseTree tree = parser.document();
+        XmlToJsonConverter converter = GuiceInjector.getInjector().getInstance(XmlToJsonConverter.class);
+        XmlNode node = converter.convert(xmlInput);
 
-        XMLVisitor visitor = GuiceInjector.getInjector().getInstance(XMLVisitor.class);
-        visitor.visit(tree);
+        System.out.println(node);
     }
 }
