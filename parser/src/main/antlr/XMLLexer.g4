@@ -35,21 +35,18 @@
 
 lexer grammar XMLLexer;
 
-@header {
-    package org.pwr.parser;
-}
-
 // Default "mode": Everything OUTSIDE of a tag
 COMMENT : '<!--' .*? '-->';
 CDATA   : '<![CDATA[' .*? ']]>';
-/** Scarf all DTD stuff, Entity Declarations like <!ENTITY ...>,
- *  and Notation Declarations <!NOTATION ...>
- */
+
+// Scarf all DTD stuff, Entity Declarations like <!ENTITY ...>,
+//  and Notation Declarations <!NOTATION ...>
 DTD       : '<!' .*? '>' -> skip;
 EntityRef : '&' Name ';';
 CharRef   : '&#' DIGIT+ ';' | '&#x' HEXDIGIT+ ';';
 SEA_WS    : (' ' | '\t' | '\r'? '\n')+;
 
+// XML tag openers
 OPEN         : '<'       -> pushMode(INSIDE);
 XMLDeclOpen  : '<?xml' S -> pushMode(INSIDE);
 SPECIAL_OPEN : '<?' Name -> more, pushMode(PROC_INSTR);

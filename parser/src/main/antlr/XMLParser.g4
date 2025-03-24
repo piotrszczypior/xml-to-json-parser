@@ -33,50 +33,38 @@
 
 parser grammar XMLParser;
 
-@header {
-    package org.pwr.parser;
-}
-
 options {
     tokenVocab = XMLLexer;
 }
 
-document
-    : prolog? misc* element misc* EOF
-    ;
 
-prolog
-    : XMLDeclOpen attribute* SPECIAL_CLOSE
-    ;
+document    : prolog? misc* element misc* EOF
+            ;
 
-content
-    : chardata? ((element | reference | CDATA | PI | COMMENT) chardata?)*
-    ;
+prolog      : XMLDeclOpen attribute* SPECIAL_CLOSE
+            ;
 
-element
-    : '<' Name attribute* '>' content '<' '/' Name '>'
-    | '<' Name attribute* '/>'
-    ;
+element     : '<' Name attribute* '>' content '<' '/' Name '>'
+            | '<' Name attribute* '/>'
+            ;
 
-reference
-    : EntityRef
-    | CharRef
-    ;
+content     : chardata? ((element | reference | CDATA | PI | COMMENT) chardata?)*
+            ;
 
-attribute
-    : Name '=' STRING
-    ; // Our STRING is AttValue in spec
+reference   : EntityRef
+            | CharRef
+            ;
 
-/** ``All text that is not markup constitutes the character data of
- *  the document.''
- */
-chardata
-    : TEXT
-    | SEA_WS
-    ;
+attribute   : Name '=' STRING
+            ; // Our STRING is AttValue in spec
 
-misc
-    : COMMENT
-    | PI
-    | SEA_WS
-    ;
+
+// All text that is not markup constitutes the character data of the document
+chardata    : TEXT
+            | SEA_WS
+            ;
+
+misc        : COMMENT
+            | PI
+            | SEA_WS
+            ;
