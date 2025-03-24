@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
@@ -62,6 +61,10 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
     public XmlNode visitAttribute(XMLParser.AttributeContext ctx) {
+        /*
+            TODO: references does not work in attributes
+            fix could be to split STRING into "chardata | attribute ...
+        */
         return XmlNode.builder()
                 .tagName(ctx.Name().getText())
                 .value(ctx.STRING().getText())
@@ -70,29 +73,63 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
     public XmlNode visitReference(XMLParser.ReferenceContext ctx) {
-        return super.visitReference(ctx);
+        String reference = ctx.getText();
+        XmlNode.XmlNodeBuilder xmlNodeBuilder = XmlNode.builder().noteType(XmlNoteType.REFERENCE);
+
+        if (ctx.EntityRef() != null) {
+            String entityReferenceType = reference.substring(1, reference.length() - 1);
+
+            return switch (entityReferenceType) {
+                case "amp" -> xmlNodeBuilder.value("&").build();
+                case "lt" -> xmlNodeBuilder.value("<").build();
+                case "gt" -> xmlNodeBuilder.value(">").build();
+                case "quot" -> xmlNodeBuilder.value("\"").build();
+                case "apos" -> xmlNodeBuilder.value("'").build();
+                default -> xmlNodeBuilder.value(reference).build();
+            };
+        }
+
+        if (ctx.CharRef() != null) {
+            String charReferenceType = reference.substring(2, reference.length() - 1);
+
+            try {
+                int codePoint;
+                if (charReferenceType.startsWith("x") || charReferenceType.startsWith("X")) {
+                    codePoint = Integer.parseInt(charReferenceType.substring(1), 16);
+                } else {
+                    codePoint = Integer.parseInt(charReferenceType.trim());
+                }
+                return xmlNodeBuilder.value(String.valueOf(Character.toChars(codePoint))).build();
+
+            } catch (IllegalArgumentException e) {
+                return xmlNodeBuilder.value(reference).build();
+            }
+        }
+
+        return xmlNodeBuilder.value(reference).build();
     }
 
     @Override
     public XmlNode visitContent(XMLParser.ContentContext ctx) {
-        XmlNode.XmlNodeBuilder nodeBuilder = XmlNode.builder();
-
+        // TODO: CDATA, COMMENT, PI
         List<XmlNode> visitedChildren = ctx.children.stream()
                 .map(this::visit)
                 .toList();
         List<XmlNode> children = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (XmlNode child : visitedChildren) {
             if (child.getTagName() == null) {
-                nodeBuilder.value(child.getValue()); // case with multiple strings between tags no supported
+                stringBuilder.append(child.getValue()); // TODO: test for white spaces
             } else {
                 children.add(child);
             }
         }
 
-        nodeBuilder.children(children);
-
-        return nodeBuilder.build();
+        return XmlNode.builder()
+                .children(children)
+                .value(stringBuilder.toString())
+                .build();
     }
 
     @Override

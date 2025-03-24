@@ -30,6 +30,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
 }
 
 tasks.generateGrammarSource {
