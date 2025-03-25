@@ -1,8 +1,8 @@
 package org.pwr;
 
-import org.pwr.visitor.XmlNode;
+import org.json.JSONObject;
 
 public interface XmlToJsonConverter {
 
-    XmlNode convert(String xml);
+    JSONObject convert(String xml);
 }

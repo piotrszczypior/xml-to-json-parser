@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
@@ -35,8 +36,8 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
         // tag content, for instance <...>dog<...
         if (ctx.content() != null && !ctx.content().isEmpty()) {
             XmlNode contentNode = visit(ctx.content());
-
-            if (contentNode.getChildren().isEmpty()) { // add sth like hasChildren()
+            if (contentNode.getChildren() == null ||
+                contentNode.getChildren().isEmpty()) { // add sth like hasChildren()
                 xmlNodeBuilder.value(contentNode.getValue());
             } else {
                 xmlNodeBuilder.children(contentNode.getChildren());
@@ -65,16 +66,19 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
             TODO: references does not work in attributes
             fix could be to split STRING into "chardata | attribute ...
         */
+        String attributeText = ctx.STRING().getText();
         return XmlNode.builder()
                 .tagName(ctx.Name().getText())
-                .value(ctx.STRING().getText())
+                .value(attributeText.substring(
+                        1,
+                        attributeText.length() - 1)) //because in lexer STRING is catched with "" :(
                 .build();
     }
 
     @Override
     public XmlNode visitReference(XMLParser.ReferenceContext ctx) {
         String reference = ctx.getText();
-        XmlNode.XmlNodeBuilder xmlNodeBuilder = XmlNode.builder().noteType(XmlNoteType.REFERENCE);
+        XmlNode.XmlNodeBuilder xmlNodeBuilder = XmlNode.builder();
 
         if (ctx.EntityRef() != null) {
             String entityReferenceType = reference.substring(1, reference.length() - 1);
@@ -100,7 +104,6 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
                     codePoint = Integer.parseInt(charReferenceType.trim());
                 }
                 return xmlNodeBuilder.value(String.valueOf(Character.toChars(codePoint))).build();
-
             } catch (IllegalArgumentException e) {
                 return xmlNodeBuilder.value(reference).build();
             }
@@ -112,6 +115,10 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
     @Override
     public XmlNode visitContent(XMLParser.ContentContext ctx) {
         // TODO: CDATA, COMMENT, PI
+
+        if (ctx.children == null) {
+            return XmlNode.builder().build(); //TODO: .value("") ???
+        }
         List<XmlNode> visitedChildren = ctx.children.stream()
                 .map(this::visit)
                 .toList();

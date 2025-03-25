@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.List;
 import java.util.Map;
 
+
 @Data
 @Builder
 public class XmlNode {
@@ -17,6 +18,4 @@ public class XmlNode {
     private Map<String, String> attributes;
 
     private List<XmlNode> children;
-
-    private XmlNoteType noteType;
 }
