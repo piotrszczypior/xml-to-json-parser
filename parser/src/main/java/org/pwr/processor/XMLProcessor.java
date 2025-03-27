@@ -7,5 +7,4 @@ import org.pwr.visitor.XmlNode;
 public interface XMLProcessor {
 
     JSONObject process(XmlNode rootNode);
-
 }
