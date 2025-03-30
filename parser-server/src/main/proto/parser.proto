@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.pwr.parserservice";
+option java_outer_classname = "ParserProto";
+
+service XmlToJsonParserService {
+  rpc Parse(ParseRequest) returns (ParseResponse) {};
+}
+
+message ParseRequest {
+  string xml = 1;
+}
+
+message ParseResponse {
+  string json = 1;
+}

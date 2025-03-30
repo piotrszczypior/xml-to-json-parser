@@ -40,3 +40,6 @@ out/
 gradlew.bat
 gradlew
 gradle/
+
+# kotlin
+.kotlin
