@@ -48,6 +48,9 @@ dependencies {
     // logger
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("ch.qos.logback:logback-classic:1.4.14")
+
+    // parser
+    implementation("org.pwr:parser:1.0.0")
 }
 
 tasks.withType<Test> {

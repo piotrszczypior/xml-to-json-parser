@@ -4,7 +4,6 @@ var jsonVersionVersion = "20250107"
 var lombokVersion = "1.18.36"
 var stringTemplatesVersion = "4.3.4"
 
-
 var grammarPackage = "org.pwr.grammar"
 
 plugins {
@@ -12,8 +11,8 @@ plugins {
     antlr
 }
 
-group = "org.pwr.parser"
-version = "1.0-SNAPSHOT"
+group = "org.pwr"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -36,6 +35,14 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src/main/gen", "src/main/java"))
+        }
+    }
+}
+
 tasks.generateGrammarSource {
     source = fileTree("src/main/antlr")
     outputDirectory = file("src/main/gen/$grammarPackage")
@@ -44,14 +51,6 @@ tasks.generateGrammarSource {
 
 tasks.compileJava {
     dependsOn(tasks.generateGrammarSource)
-}
-
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/main/gen", "src/main/java"))
-        }
-    }
 }
 
 tasks.test {

@@ -4,3 +4,4 @@ pluginManagement {
     }
 }
 rootProject.name = "parser-server"
+includeBuild("../parser")
