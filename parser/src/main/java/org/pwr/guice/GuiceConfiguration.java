@@ -7,7 +7,7 @@ import org.pwr.XmlToJsonConverter;
 import org.pwr.XmlToJsonConverterImpl;
 import org.pwr.visitor.XMLVisitor;
 
-
+// This class defines the Guice configuration for dependency injection
 public class GuiceConfiguration extends AbstractModule {
 
     @Override

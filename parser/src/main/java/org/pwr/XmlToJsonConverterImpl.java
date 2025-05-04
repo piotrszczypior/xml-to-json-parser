@@ -21,8 +21,8 @@ public class XmlToJsonConverterImpl implements XmlToJsonConverter {
     private final JsonProcessor jsonProcessor;
 
     @Override
-    public ST convert(final String xml) {
-        return jsonProcessor.process(parseToObject(xml));
+    public String convert(final String xml) {
+        return jsonProcessor.process(parseToObject(xml)).render();
     }
 
     private XmlNode parseToObject(final String xml) {

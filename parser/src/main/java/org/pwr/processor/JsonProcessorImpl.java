@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 
 public class JsonProcessorImpl implements JsonProcessor {
-    // TODO attributes
 
     @Override
     public ST process(XmlNode node) {
@@ -18,13 +17,25 @@ public class JsonProcessorImpl implements JsonProcessor {
         return JsonTemplates.renderObject(List.of(jsonTemplate));
     }
 
+    // TODO attributes
     private ST process(XmlNode node, boolean includeTagName) {
-        if (node.getChildren() == null || node.getChildren().isEmpty()) {
-            // TODO: handle list without tag name
+        if (node.isLeafNode()) {
             return includeTagName
-                   ? JsonTemplates.renderValue(node.getTagName(), node.getValue())
-                   : JsonTemplates.renderValue(null, node.getValue());
+                    ? JsonTemplates.renderValueWithTag(node.getTagName(), node.getValue())
+                    : JsonTemplates.renderValue(node.getValue());
         }
+        List<ST> objectContent = processDuplicatesInListsAndVisitChildren(node);
+
+        if (node.getValue() != null && !node.getValue().isEmpty()) {
+            objectContent.add(JsonTemplates.renderValueWithTag(JsonConstants.TAG_VALUE, node.getValue()));
+        }
+
+        return includeTagName
+                ? JsonTemplates.renderObjectWithTag(node.getTagName(), objectContent)
+                : JsonTemplates.renderObject(objectContent);
+    }
+
+    private List<ST> processDuplicatesInListsAndVisitChildren(XmlNode node) {
         Map<String, List<XmlNode>> childrenByTag = node.getChildren().stream()
                 .collect(Collectors.groupingBy(XmlNode::getTagName));
         List<ST> objectContent = new ArrayList<>();
@@ -46,12 +57,6 @@ public class JsonProcessorImpl implements JsonProcessor {
             }
         }
 
-        if (node.getValue() != null && !node.getValue().isEmpty()) {
-            objectContent.add(JsonTemplates.renderValue(JsonConstants.TAG_VALUE, node.getValue()));
-        }
-
-        return includeTagName
-               ? JsonTemplates.renderObjectWithChildren(node.getTagName(), objectContent)
-               : JsonTemplates.renderObject(objectContent);
+        return objectContent;
     }
 }

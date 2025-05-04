@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 
@@ -38,8 +37,7 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
         // tag content, for instance <...>dog<...
         if (ctx.content() != null && !ctx.content().isEmpty()) {
             XmlNode contentNode = visit(ctx.content());
-            if (contentNode.getChildren() == null ||
-                contentNode.getChildren().isEmpty()) { // add sth like hasChildren()
+            if (contentNode.isLeafNode()) { // add sth like hasChildren()
                 xmlNodeBuilder.value(contentNode.getValue());
             } else {
                 xmlNodeBuilder.children(contentNode.getChildren());
@@ -74,9 +72,8 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
         String attributeText = ctx.STRING().getText();
         return XmlNode.builder()
                 .tagName(ctx.Name().getText())
-                .value(attributeText.substring(
-                        1,
-                        attributeText.length() - 1)) //because in lexer STRING is catched with "" :(
+                //because in lexer STRING is catched with "" :(
+                .value(attributeText.substring(1, attributeText.length() - 1))
                 .build();
     }
 
@@ -148,11 +145,13 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
     public XmlNode visitProlog(XMLParser.PrologContext ctx) {
-        return null; // Don't need that in JSON
+        // Don't need that in JSON
+        return null;
     }
 
     @Override
     public XmlNode visitMisc(XMLParser.MiscContext ctx) {
-        return null; // Don't need that in JSON
+        // Don't need that in JSON
+        return null;
     }
 }

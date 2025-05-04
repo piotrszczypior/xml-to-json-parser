@@ -1,8 +1,6 @@
 package org.pwr;
 
-import org.json.JSONObject;
 import org.pwr.guice.GuiceInjector;
-import org.stringtemplate.v4.ST;
 
 
 public class Main {
@@ -30,13 +28,13 @@ public class Main {
                     <cat>miau2</cat>
                     testt
                 </dell>
-              
+                
                 </root>
-              
+                
                 """;
 
         XmlToJsonConverter converter = GuiceInjector.getInjector().getInstance(XmlToJsonConverter.class);
-        ST st = converter.convert(xmlInput);
-        System.out.println(st.render());
+        String st = converter.convert(xmlInput);
+        System.out.println(st);
     }
 }

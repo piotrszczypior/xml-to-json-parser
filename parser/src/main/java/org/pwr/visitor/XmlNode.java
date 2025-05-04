@@ -19,6 +19,7 @@ public class XmlNode {
 
     private List<XmlNode> children;
 
-    @Builder.Default
-    private boolean isRootNode = false;
+    public boolean isLeafNode() {
+        return children == null || children.isEmpty();
+    }
 }
