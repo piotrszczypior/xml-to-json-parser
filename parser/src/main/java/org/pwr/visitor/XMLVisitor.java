@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 
 public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
@@ -41,6 +43,9 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
                 xmlNodeBuilder.value(contentNode.getValue());
             } else {
                 xmlNodeBuilder.children(contentNode.getChildren());
+                if (contentNode.getValue() != null) {
+                    xmlNodeBuilder.value(contentNode.getValue());
+                }
             }
         }
 
@@ -51,10 +56,10 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
     public XmlNode visitChardata(XMLParser.ChardataContext ctx) {
         XmlNode.XmlNodeBuilder xmlNodeBuilder = XmlNode.builder();
 
-        if (ctx.TEXT() != null) {
-            xmlNodeBuilder.value(ctx.TEXT().getText());
+        if (ctx.TEXT() != null && !ctx.TEXT().getText().isEmpty()) {
+            xmlNodeBuilder.value(ctx.TEXT().getText().strip());
         } else if (ctx.SEA_WS() != null) {
-            xmlNodeBuilder.value(ctx.SEA_WS().getText());
+            xmlNodeBuilder.value(null);
         }
 
         return xmlNodeBuilder.build();
@@ -123,11 +128,13 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
                 .map(this::visit)
                 .toList();
         List<XmlNode> children = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(", ");
 
         for (XmlNode child : visitedChildren) {
             if (child.getTagName() == null) {
-                stringBuilder.append(child.getValue()); // TODO: test for white spaces
+                if (child.getValue() != null) {
+                    stringJoiner.add(child.getValue());
+                }
             } else {
                 children.add(child);
             }
@@ -135,7 +142,7 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
         return XmlNode.builder()
                 .children(children)
-                .value(stringBuilder.toString())
+                .value(stringJoiner.toString())
                 .build();
     }
 

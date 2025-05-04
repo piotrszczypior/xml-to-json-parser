@@ -18,4 +18,7 @@ public class XmlNode {
     private Map<String, String> attributes;
 
     private List<XmlNode> children;
+
+    @Builder.Default
+    private boolean isRootNode = false;
 }

@@ -1,13 +1,11 @@
-package org.pwr;
+package org.pwr.processor;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class XmlToJsonConstants {
-
-    public static final String TAG_ATTRIBUTES = "@attributes";
+public class JsonConstants {
 
     public static final String TAG_VALUE = "@text";
 }

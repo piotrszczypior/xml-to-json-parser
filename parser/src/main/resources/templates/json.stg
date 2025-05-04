@@ -1,0 +1,39 @@
+group json;
+
+aggregate(elements) ::= <<
+<elements:{element | <element>}; separator=",\n">
+>>
+
+object(content) ::= <<
+{
+    <content>
+}
+>>
+
+object_with_children(tag, content) ::= <<
+"<tag>": {
+    <content>
+}
+>>
+
+key_string(_key, _value) ::= <<
+"<_key>": "<_value>"
+>>
+
+key_raw(_key, _value) ::= <<
+"<_key>": <_value>
+>>
+
+list(tag, objects) ::= <<
+"<tag>": [
+    <objects:{obj | <obj>}; separator=",\n">
+]
+>>
+
+empty_list() ::= <<
+[]
+>>
+
+comma() ::= <<
+,
+>>

@@ -1,6 +1,8 @@
 package org.pwr;
 
+import org.json.JSONObject;
 import org.pwr.guice.GuiceInjector;
+import org.stringtemplate.v4.ST;
 
 
 public class Main {
@@ -8,42 +10,33 @@ public class Main {
     public static void main(String[] args) {
 
         String xmlInput = """
-                <?xml version="1.0" encoding="UTF-8"?>
-                               <message>
-                                 <header>
-                                   <title>XML &amp; JSON Conversion</title>
-                                   <description>Examples of &lt;references&gt; in XML</description>
-                                 </header>
-                                 <body>
-                                   <paragraph>
-                                     This is a paragraph with special characters: &lt; &gt; &amp; &quot; &apos;
-                                   </paragraph>
-                                   <data value="Price: &#36;100"/>
-                                   <special>
-                                        ddd
-                                   </special>
-                                   <unicode>Unicode character: &#x263A;</unicode>
-                                 </body>
-                               </message>
+                <root>
+                <animals>
+                    ggwp
+                    <dog><name>Maja</name></dog>
+                    <cat>miau</cat>
+                    testt
+                </animals>
+                aaa
+                <animals>
+                    <dog><name>Rex</name></dog>
+                    <cat>miau</cat>
+                    <cat>miau2</cat>
+                    testt
+                </animals>
+                <dell>
+                    <dog><name>Rex</name></dog>
+                    <cat>miau</cat>
+                    <cat>miau2</cat>
+                    testt
+                </dell>
+              
+                </root>
+              
                 """;
-//        String xmlInput = """
-//                <?xml version="1.0" encoding="UTF-8"?>
-//                            <root>
-//                                <library a="second">
-//                                    <book></book>
-//                                    <book>wadwad
-//                                    </book>
-//                                </library>
-//                                <book c="third">
-//                                    awdwad
-//                                </book>
-//                                    dadadas
-//                                <empty></empty>
-//                                <empty2/>
-//                            </root>
-//                """;
 
         XmlToJsonConverter converter = GuiceInjector.getInjector().getInstance(XmlToJsonConverter.class);
-        System.out.printf(converter.convert(xmlInput).toString());
+        ST st = converter.convert(xmlInput);
+        System.out.println(st.render());
     }
 }

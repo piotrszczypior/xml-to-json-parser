@@ -1,8 +1,9 @@
 package org.pwr;
 
-import org.json.JSONObject;
+import org.stringtemplate.v4.ST;
+
 
 public interface XmlToJsonConverter {
 
-    JSONObject convert(String xml);
+    ST convert(String xml);
 }

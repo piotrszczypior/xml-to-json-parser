@@ -2,6 +2,7 @@ var antlr4Version = "4.13.2"
 var googleGuiceVersion = "7.0.0"
 var jsonVersionVersion = "20250107"
 var lombokVersion = "1.18.36"
+var stringTemplatesVersion = "4.3.4"
 
 
 var grammarPackage = "org.pwr.grammar"
@@ -19,11 +20,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    // antlr
     antlr("org.antlr:antlr4:$antlr4Version")
+
+    // string templates
+    implementation("org.antlr:ST4:$stringTemplatesVersion")
+
+    // guice
     implementation("com.google.inject:guice:$googleGuiceVersion")
-    implementation("org.json:json:$jsonVersionVersion")
 
     // lombok
     compileOnly("org.projectlombok:lombok:$lombokVersion")
@@ -32,6 +36,7 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
+    implementation("org.json:json:$jsonVersionVersion")
 }
 
 tasks.generateGrammarSource {

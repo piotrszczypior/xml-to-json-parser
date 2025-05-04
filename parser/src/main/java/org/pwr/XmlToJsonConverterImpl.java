@@ -6,23 +6,23 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.json.JSONObject;
 import org.pwr.grammar.XMLLexer;
 import org.pwr.grammar.XMLParser;
 import org.pwr.guice.GuiceInjector;
-import org.pwr.processor.XMLProcessor;
+import org.pwr.processor.JsonProcessor;
 import org.pwr.visitor.XMLVisitor;
 import org.pwr.visitor.XmlNode;
+import org.stringtemplate.v4.ST;
 
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class XmlToJsonConverterImpl implements XmlToJsonConverter {
 
-    private final XMLProcessor xmlProcessor;
+    private final JsonProcessor jsonProcessor;
 
     @Override
-    public JSONObject convert(final String xml) {
-        return xmlProcessor.process(parseToObject(xml));
+    public ST convert(final String xml) {
+        return jsonProcessor.process(parseToObject(xml));
     }
 
     private XmlNode parseToObject(final String xml) {
