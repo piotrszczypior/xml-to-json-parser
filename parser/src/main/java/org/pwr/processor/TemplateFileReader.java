@@ -1,5 +1,7 @@
 package org.pwr.processor;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupString;
 
@@ -8,6 +10,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TemplateFileReader {
 
     private static final String TEMPLATE_FILE = "templates/json.stg";
@@ -23,7 +26,7 @@ public class TemplateFileReader {
 
             return new STGroupString(template);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load template file", e);
+            throw new TemplateFileException("Failed to load template file", e);
         }
     }
 }

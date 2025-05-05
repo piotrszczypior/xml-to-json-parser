@@ -13,6 +13,7 @@ public class JsonProcessorImpl implements JsonProcessor {
 
     @Override
     public ST process(XmlNode node) {
+        // First object include tag name - as a root object
         ST jsonTemplate = process(node, true);
         return JsonTemplates.renderObject(List.of(jsonTemplate));
     }
@@ -42,21 +43,27 @@ public class JsonProcessorImpl implements JsonProcessor {
 
         for (Map.Entry<String, List<XmlNode>> entry : childrenByTag.entrySet()) {
 
-            if (entry.getValue().size() > 1) {
+            if (shouldAggregateObjectsIntoList(entry)) {
                 List<ST> children = entry.getValue().stream()
                         .map(n -> process(n, false))
                         .toList();
-
                 objectContent.add(JsonTemplates.renderList(entry.getKey(), children));
+
             } else {
+
+                // After grouping by tag and aggregating multiple objects,
+                // it is assumed that there is another object with different tag.
                 List<ST> children = entry.getValue().stream()
                         .map(n -> process(n, true))
                         .toList();
-
                 objectContent.add(children.getFirst());
             }
         }
 
         return objectContent;
+    }
+
+    private boolean shouldAggregateObjectsIntoList(Map.Entry<String, List<XmlNode>> entry) {
+        return entry.getValue().size() > 1;
     }
 }

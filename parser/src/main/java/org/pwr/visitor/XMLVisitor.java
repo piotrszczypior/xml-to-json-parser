@@ -117,7 +117,6 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
     @Override
     public XmlNode visitContent(XMLParser.ContentContext ctx) {
         // TODO: CDATA, COMMENT, PI
-
         if (ctx.children == null) {
             return XmlNode.builder().build(); //TODO: .value("") ???
         }
