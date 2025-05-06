@@ -1,0 +1,26 @@
+<!--<div class="editor-wrapper">-->
+<!--  <ace-->
+<!--    [mode]="'text'"-->
+<!--    [config]="config"-->
+<!--    style="height: 100%; width: 100%; overflow: auto;"/>-->
+<!--</div>-->
+
+
+<div class="editor-wrapper">
+  <div class="editor-header">
+    <div class="title">
+      XML
+    </div>
+    <button class="clear-button">
+      Clear
+    </button>
+    <button class="btn" (click)="formatXml()">
+      format XML
+    </button>
+  </div>
+  <textarea
+    #textarea
+    class="xml-textarea textarea"
+    (input)="onChange($event)"
+    placeholder="Paste XML here..."></textarea>
+</div>

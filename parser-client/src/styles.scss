@@ -1,0 +1,4 @@
+@use "tailwindcss" as *;
+@plugin "daisyui" {
+  themes: all;
+}

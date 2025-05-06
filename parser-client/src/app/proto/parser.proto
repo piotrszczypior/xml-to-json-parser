@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service XmlToJsonParserService {
+  rpc Parse(ParseRequest) returns (ParseResponse) {};
+}
+
+message ParseRequest {
+  string xml = 1;
+}
+
+message ParseResponse {
+  string json = 1;
+}

@@ -1,0 +1,15 @@
+<section class="page">
+  XML to JSON parser
+
+  <div class="page-content">
+    <div class="editor">
+      <app-xml-editor (xmlChanged)="changed($event)" />
+    </div>
+    <div class="output">
+      <app-json-output />
+    </div>
+  </div>
+  <div class="parse-button">
+    <app-confirm-button [text]="'Parse to JSON'" (confirm)="sendRequest()"/>
+  </div>
+</section>
