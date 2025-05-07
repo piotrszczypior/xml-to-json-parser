@@ -1,0 +1,36 @@
+services:
+  parser-server:
+    build:
+      context: .
+      dockerfile: parser-server/Dockerfile
+    container_name: parser_server
+    ports:
+      - "8080:8080"
+    networks:
+        - xml-to-json-parser-network
+
+  parser-client:
+    build:
+      context: ./parser-client
+    container_name: parser_client
+    ports:
+      - "4200:4200"
+    networks:
+        - xml-to-json-parser-network
+
+  envoy-proxy:
+    build:
+      context: ./envoy
+    container_name: envoy_proxy
+    ports:
+      - "8090:8090"
+    networks:
+      - xml-to-json-parser-network
+    depends_on:
+      - parser-client
+      - parser-server
+
+
+networks:
+  xml-to-json-parser-network:
+    driver: bridge

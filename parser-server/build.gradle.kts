@@ -3,9 +3,11 @@ plugins {
     kotlin("jvm") version "2.1.10"
     kotlin("kapt") version "2.1.10"
     id("com.google.protobuf") version "0.9.4"
+    id("io.ktor.plugin") version "3.1.3"
+    application
 }
 
-group = "org.pwr"
+group = "org.pwr.parserserver"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -84,4 +86,8 @@ protobuf {
 
 kapt {
     showProcessorStats = true
+}
+
+application {
+    mainClass.set("org.pwr.parserserver.ParserServerApplicationKt")
 }

@@ -10,7 +10,7 @@ export class GrpcClientService {
   private client: XmlToJsonParserServiceClient;
 
   constructor() {
-    this.client = new XmlToJsonParserServiceClient('http://192.168.0.36:8080', null, null);
+    this.client = new XmlToJsonParserServiceClient('http://localhost:8090', null, null);
   }
 
   parseXml(xml: string): Promise<string> {

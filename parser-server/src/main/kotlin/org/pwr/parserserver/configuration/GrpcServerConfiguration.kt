@@ -10,7 +10,7 @@ class GrpcServerConfiguration(private val parserService: ParserService) {
 
     private val server by lazy {
         log.debug("Initializing GrpcServer on port 8090")
-        ServerBuilder.forPort(8090)
+        ServerBuilder.forPort(8080)
             .addService(parserService)
             .build()
     }

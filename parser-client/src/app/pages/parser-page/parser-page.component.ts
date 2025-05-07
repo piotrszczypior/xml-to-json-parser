@@ -23,6 +23,6 @@ constructor(private readonly grpcService: GrpcClientService) {}
   }
 
   sendRequest() {
-    this.grpcService.parseXml(this.xml).then(r => console.log(r));
+    this.grpcService.parseXml('<root>text</root>').then(r => console.log(r));
   }
 }
