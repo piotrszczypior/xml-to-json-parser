@@ -36,8 +36,7 @@ public class JsonProcessorImpl implements JsonProcessor {
         }
 
         if (node.hasAttributes()) {
-            List<ST> processedAttributes = node.getAttributes().entrySet().stream().map(pair -> JsonTemplates.renderValueWithTag(pair.getKey(), pair.getValue())).toList();
-            objectContent.add(JsonTemplates.renderList(JsonConstants.ATTRIBUTE_VALUE, processedAttributes));
+            objectContent.add(processAttributes(node));
         }
 
         return includeTagName
