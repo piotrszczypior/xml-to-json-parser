@@ -4,7 +4,6 @@ import org.pwr.grammar.XMLParser;
 import org.pwr.grammar.XMLParserBaseVisitor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,10 +65,6 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
     public XmlNode visitAttribute(XMLParser.AttributeContext ctx) {
-        /*
-            TODO: references does not work in attributes
-            fix could be to split STRING into "chardata | attribute ...
-        */
         String attributeText = ctx.STRING().getText();
         return XmlNode.builder()
                 .tagName(ctx.Name().getText())
@@ -117,9 +112,8 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
     @Override
     public XmlNode visitContent(XMLParser.ContentContext ctx) {
-        // TODO: CDATA, COMMENT, PI
         if (ctx.children == null) {
-            return XmlNode.builder().build(); //TODO: .value("") ???
+            return XmlNode.builder().build();
         }
         List<XmlNode> visitedChildren = ctx.children.stream()
                 .map(this::visit)
