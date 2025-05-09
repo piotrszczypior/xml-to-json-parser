@@ -10,31 +10,30 @@ import format from 'xml-formatter';
   templateUrl: './xml-editor.component.html',
   styleUrl: './xml-editor.component.scss'
 })
-export class XmlEditorComponent implements OnInit {
+export class XmlEditorComponent {
   @ViewChild('textarea') textareaElement: ElementRef<HTMLTextAreaElement>;
 
-  @Output() xmlChanged = new EventEmitter<string>();
+  @Output()
+  xmlChanged = new EventEmitter<string>();
 
   onChange(event: Event): void {
     const target = event.target as HTMLTextAreaElement;
-    this.formatXml();
     this.xmlChanged.emit(target.value);
   }
 
-  ngOnInit() {
-
-
-  }
-
-  formatXml() {
+  formatXml(): void {
     const text = this.textareaElement.nativeElement.value;
 
     if (text) {
       try {
         this.textareaElement.nativeElement.value = format(text);
       } catch (e) {
-        alert('Error by formatting XML: ' + e);
+        alert('Error by formatting XML: Syntax error');
       }
     }
+  }
+
+  clearTextarea(): void {
+    this.textareaElement.nativeElement.value = '';
   }
 }

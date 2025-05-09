@@ -2,3 +2,8 @@
 @plugin "daisyui" {
   themes: all;
 }
+
+body,
+html {
+  height: 100%;
+}

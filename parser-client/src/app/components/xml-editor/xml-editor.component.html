@@ -1,22 +1,16 @@
-<!--<div class="editor-wrapper">-->
-<!--  <ace-->
-<!--    [mode]="'text'"-->
-<!--    [config]="config"-->
-<!--    style="height: 100%; width: 100%; overflow: auto;"/>-->
-<!--</div>-->
-
-
 <div class="editor-wrapper">
   <div class="editor-header">
     <div class="title">
-      XML
+      XML Editor
     </div>
-    <button class="clear-button">
-      Clear
-    </button>
-    <button class="btn" (click)="formatXml()">
-      format XML
-    </button>
+    <div class="actions">
+      <button class="btn" (click)="clearTextarea()">
+        Clear
+      </button>
+      <button class="btn" (click)="formatXml()">
+        format XML
+      </button>
+    </div>
   </div>
   <textarea
     #textarea

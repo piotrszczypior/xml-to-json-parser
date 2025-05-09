@@ -19,6 +19,7 @@ export class GrpcClientService {
 
     return new Promise((resolve, reject) => {
       this.client.parse(request, {}, (err: grpcWeb.RpcError, response: ParseResponse) => {
+
         if (err) {
           reject(err);
         } else {

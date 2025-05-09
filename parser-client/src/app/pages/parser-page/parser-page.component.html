@@ -1,12 +1,27 @@
-<section class="page">
-  XML to JSON parser
+<section class="page mt-5">
+  <div class="header-container">
 
-  <div class="page-content">
+    <h1 class="text-3xl from-primary to-secondary bg-clip-text bg-gradient-to-r mb-0 pb-0">XML to JSON Parser</h1>
+    Converts your XML to JSON with a click of a button. This tool is designed to help you parse XML data into JSON format quickly and easily.
+    <div class="divider m-1"></div>
+
+    <p>Tech stack:</p>
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="badge badge-primary badge-outline">Antlr4</div>
+      <div class="badge badge-primary badge-outline">Kotlin</div>
+      <div class="badge badge-primary badge-outline">Java</div>
+      <div class="badge badge-primary badge-outline">gRPC</div>
+      <div class="badge badge-primary badge-outline">Envoy Proxy</div>
+      <div class="badge badge-primary badge-outline">Angular</div>
+    </div>
+  </div>
+
+  <div class="page-content mt-10">
     <div class="editor">
       <app-xml-editor (xmlChanged)="changed($event)" />
     </div>
-    <div class="output">
-      <app-json-output />
+    <div class="output" *ngIf="jsonOutput$ | async as json">
+      <app-json-output [jsonString]="json" />
     </div>
   </div>
   <div class="parse-button">

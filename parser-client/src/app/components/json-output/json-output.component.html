@@ -1,3 +1,12 @@
-<div class="json-output-container">
-  <pre class="json-pre" [ngClass]="{'error': hasError}"><code [innerHTML]="jsonString"></code></pre>
+<div class="container">
+  <div class="header">
+    <h2>JSON Output</h2>
+    <button class="btn" (click)="copyToClipboard()">Copy</button>
+  </div>
+  <div class="json-output-container">
+    <pre class="json-pre"
+      ><code [innerHTML]="jsonString"></code
+    ></pre>
+  </div>
 </div>
+
