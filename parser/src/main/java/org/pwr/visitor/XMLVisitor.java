@@ -5,6 +5,7 @@ import org.pwr.grammar.XMLParserBaseVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -25,7 +26,7 @@ public class XMLVisitor extends XMLParserBaseVisitor<XmlNode> {
 
         // tag with attributes, for instance <... id="20>...
         if (ctx.attribute() != null && !ctx.attribute().isEmpty()) {
-            Map<String, String> attributes = new HashMap<>();
+            Map<String, String> attributes = new LinkedHashMap<>();
 
             for (XMLParser.AttributeContext attribute : ctx.attribute()) {
                 XmlNode attrNode = visit(attribute);

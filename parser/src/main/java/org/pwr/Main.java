@@ -8,29 +8,32 @@ public class Main {
     public static void main(String[] args) {
 
         String xmlInput = """
-                <root>
-                <animals>
-                    ggwp
-                    <dog><name>Maja</name></dog>
-                    <cat>miau</cat>
-                    testt
-                </animals>
-                aaa
-                <animals>
-                    <dog><name>Rex</name></dog>
-                    <cat>miau</cat>
-                    <cat>miau2</cat>
-                    testt
-                </animals>
-                <dell>
-                    <dog><name>Rex</name></dog>
-                    <cat>miau</cat>
-                    <cat>miau2</cat>
-                    testt
-                </dell>
-                
+                <root test="someattr" test2="someattr">
+                    <animals gender="female">
+                        <dog>
+                            <name attr="test">Maja</name>
+                        </dog>
+                        <cat>
+                            <name>Kicia</name>
+                        </cat>
+                    </animals>
+                    <animals gender="male">
+                        <dog>
+                            <name attr="test, test2">Rex</name>
+                        </dog>
+                        <cat>
+                            <name>Puszek</name>
+                        </cat>
+                    </animals>
+                    <pets>
+                        <dog>
+                            <name>Rex</name>
+                        </dog>
+                        <cat>
+                            <name>Puszek</name>
+                        </cat>
+                    </pets>
                 </root>
-                
                 """;
 
         XmlToJsonConverter converter = GuiceInjector.getInjector().getInstance(XmlToJsonConverter.class);

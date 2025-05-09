@@ -22,4 +22,8 @@ public class XmlNode {
     public boolean isLeafNode() {
         return children == null || children.isEmpty();
     }
+
+    public boolean hasAttributes() {
+        return (attributes != null && !attributes.isEmpty());
+    }
 }

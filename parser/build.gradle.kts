@@ -33,6 +33,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    // junit
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
 sourceSets {
