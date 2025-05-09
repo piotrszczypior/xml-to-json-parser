@@ -9,7 +9,7 @@ class GrpcServerConfiguration(private val parserService: ParserService) {
     private val log = LoggerFactory.getLogger(GrpcServerConfiguration::class.java)
 
     private val server by lazy {
-        log.debug("Initializing GrpcServer on port 8090")
+        log.debug("Initializing GrpcServer on port 8080")
         ServerBuilder.forPort(8080)
             .addService(parserService)
             .build()
@@ -18,7 +18,7 @@ class GrpcServerConfiguration(private val parserService: ParserService) {
     fun grpcServer(): Unit = start()
 
     fun onShutdown() {
-        log.debug("Shutting down GRPC server on port 8090")
+        log.debug("Shutting down GRPC server on port 8080")
         server.shutdown()
     }
 
