@@ -71,11 +71,14 @@ cd xml-to-json-parser
 ``` bash 
 docker-compose up --build
 ```
+---
 
 ## Usage
 
 Access the Frontend:
 Open your browser and navigate to `http://localhost:4200`
+
+---
 
 ## Project Structure
 
@@ -88,5 +91,7 @@ Open your browser and navigate to `http://localhost:4200`
 ├── docker-compose.yml    # Docker Compose configuration
 └── .gitignore
 ```
+
+---
 
 
