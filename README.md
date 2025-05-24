@@ -1,7 +1,7 @@
 # xml-to-json-parser
 
-A application for parsing XML to JSON, utilizing gRPC for communication between the frontend and backend and Antlr for parsing. 
-Envoy is used as a proxy to enable gRPC-Web support. 
+An application for parsing XML to JSON, utilizing gRPC for communication between the frontend and backend and Antlr for parsing.  
+Envoy is used as a proxy to enable gRPC-Web support.  
 The entire stack is orchestrated using Docker and Docker Compose.
 
 ---
@@ -20,15 +20,43 @@ The entire stack is orchestrated using Docker and Docker Compose.
 ## Overview
 
 This project provides a robust solution for converting XML data to JSON format. The system is split into multiple services:
-- **Frontend (parser-client)** written in Angular - communicates with the backend via gRPC. Enables to paste XML to get JSON
-- **Backend (parser-server)** written in Kotlin - handles the XML to JSON comunication and utilize library **Parser** for parsing.  
-- **Envoy** acts as a proxy to enable gRPC-Web communication.
-- **Parser** written in Java. Uses Antlr to handle conversion logic. 
+- **Frontend (parser-client)** — written in Angular. Communicates with the backend via gRPC. Allows users to paste XML and get JSON.
+- **Backend (parser-server)** — written in Kotlin. Handles the XML to JSON communication and utilizes the **Parser** library for parsing.
+- **Envoy** — acts as a proxy to enable gRPC-Web communication.
+- **Parser** — written in Java. Uses Antlr to handle the conversion logic.
 
 ---
 
 ## Architecture
 
+```
+[parser-client (Angular)]
+|
+gRPC-Web
+|
+[Envoy]
+|
+gRPC
+|
+[parser-server (Kotlin)]
+|
+(uses)
+|
+[parser (Java/Antlr)]
+```
+
+- **parser-client** (Angular): The frontend application. Sends requests using gRPC-Web.
+- **Envoy**: Acts as a proxy, translating gRPC-Web requests from the browser to standard gRPC for the backend.
+- **parser-server** (Kotlin): The backend service. Receives gRPC requests, processes them, and calls the Parser library.
+- **parser** (Java/Antlr): A Java library using Antlr for XML parsing and conversion to JSON.
+
+---
+
+## Requirements
+
+- [Docker](https://www.docker.com/) (and Docker Compose)
+
+---
 
 ## Getting Started
 
