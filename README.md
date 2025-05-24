@@ -63,7 +63,7 @@ gRPC
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/piotrszczypior/xml-to-json-parser.git
+git clone git@github.com:piotrszczypior/xml-to-json-parser.git
 cd xml-to-json-parser
 ```
 
