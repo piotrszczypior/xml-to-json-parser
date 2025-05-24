@@ -46,15 +46,15 @@ gRPC
 ```
 
 - **parser-client** (Angular): The frontend application. Sends requests using gRPC-Web.
-- **Envoy**: Acts as a proxy, translating gRPC-Web requests from the browser to standard gRPC for the backend.
-- **parser-server** (Kotlin): The backend service. Receives gRPC requests, processes them, and calls the Parser library.
+- **Envoy**: Acts as a proxy, translating gRPC-Web requests from the browser (HTTP/1.1) to standard gRPC for the backend (HTTP/2).
+- **parser-server** (Kotlin): The backend service. Receives gRPC requests, processes them, and uses the Parser library to get JSON.
 - **parser** (Java/Antlr): A Java library using Antlr for XML parsing and conversion to JSON.
 
 ---
 
 ## Requirements
 
-- [Docker](https://www.docker.com/) (and Docker Compose)
+- [Docker](https://www.docker.com/)
 
 ---
 
