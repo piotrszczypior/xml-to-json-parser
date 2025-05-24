@@ -69,7 +69,7 @@ cd xml-to-json-parser
 
 ### 2. Start services
 ``` bash 
-docker-compose up --build
+docker compose up --build
 ```
 ---
 
